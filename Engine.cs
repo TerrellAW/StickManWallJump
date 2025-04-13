@@ -6,9 +6,27 @@ namespace StickManWallJump;
 
 public class Engine : Game
 {
+    // Textures
     Texture2D platformTexture;
     Texture2D wallTexture;
+    Texture2D playerTexture;
 
+    // Physics constants
+    float gravity = 6.0f;
+    float airFriction = 0.98f;
+
+    // Player constants
+    float playerMaxJumpForce = 100f;
+    float playerMinJumpForce = 20f;
+    float playerMaxSpeed = 400f;
+
+    // Player variables
+    float playerJumpForce;
+    float playerSpeedX;
+    float playerSpeedY;
+    Vector2 playerPosition;
+
+    // Game components
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -16,12 +34,15 @@ public class Engine : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = false;
     }
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        // Initialize player
+        playerPosition = new Vector2(340, 300);
+        playerSpeedX = 0f;
+        playerSpeedY = 0f;
 
         base.Initialize();
     }
@@ -33,6 +54,9 @@ public class Engine : Game
         // Level textures
         platformTexture = Content.Load<Texture2D>("platform");
         wallTexture = Content.Load<Texture2D>("wall");
+
+        // Player texture
+        playerTexture = Content.Load<Texture2D>("stickman");
     }
 
     protected override void Update(GameTime gameTime)
@@ -40,25 +64,78 @@ public class Engine : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        // Gravity
+        if (playerSpeedY < playerMaxSpeed)
+            playerSpeedY += gravity;
+
+        // Air friction
+        playerSpeedX *= airFriction;
+        
+        // Framerate based speed
+        float updatedPlayerSpeedX = playerSpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float updatedPlayerSpeedY = playerSpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        // Motion
+        playerPosition.Y += updatedPlayerSpeedY;
+        playerPosition.X += updatedPlayerSpeedX;
 
         base.Update(gameTime);
     }
 
+
+    /// <summary>
+    /// Draws the game.
+    /// 
+    /// This recursive method is called once per frame and is responsible for rendering the game objects to the screen.
+    /// 
+    /// Vector2 objects position drawn elements with 2 coordinates, x and y.
+    /// The x coordinate is horizontal and starts at 0 on the left side of the screen.
+    /// The y coordinate is vertical and starts at 0 at the top of the screen.
+    /// </summary>
+    /// <param name="gameTime"></param>
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Clear(Color.Black); // Background colour
+
+        // Screen dimensions
+        int screenWidth = GraphicsDevice.Viewport.Width;
+        int screenHeight = GraphicsDevice.Viewport.Height;
+
+        // Begin sprite batch
+        _spriteBatch.Begin();
 
         // Draw platforms
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(platformTexture, new Vector2(100, 300), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.FlipVertically, 0f);
+        _spriteBatch.Draw(platformTexture, new Vector2(100, 200), Color.White);
         _spriteBatch.Draw(platformTexture, new Vector2(300, 400), Color.White);
-        _spriteBatch.End();
 
         // Draw walls
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(wallTexture, new Vector2(50, 200), Color.White);
-        _spriteBatch.Draw(wallTexture, new Vector2(400, 100), Color.White);
+        _spriteBatch.Draw(
+            wallTexture, 
+            new Vector2(-50, 0), 
+            null, 
+            Color.White, 
+            0f, 
+            Vector2.Zero, 
+            1f, 
+            SpriteEffects.FlipHorizontally, 
+            0f
+        );
+        _spriteBatch.Draw(wallTexture, new Vector2(screenWidth - 50, 0), Color.White);
+
+        // Draw player
+        _spriteBatch.Draw(
+            playerTexture, 
+            playerPosition,
+            null,
+            Color.White,
+            0f,
+            new Vector2(playerTexture.Width / 2, playerTexture.Height / 2),
+            Vector2.One,
+            SpriteEffects.None,
+            0f
+        );
+
+        // End sprite batch
         _spriteBatch.End();
 
         base.Draw(gameTime);
