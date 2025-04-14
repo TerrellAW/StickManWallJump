@@ -4,6 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace StickManWallJump;
 
+/// <summary>
+/// TODO: 
+/// - Store variables/objects for platforms and walls
+/// - Dynamic collision detection system that can be easily extended to other objects
+/// </summary>
+
 public class Engine : Game
 {
     // Textures
@@ -82,6 +88,7 @@ public class Engine : Game
         NextPlayerPositionX = playerPosition.X + updatedPlayerSpeedX;
 
         // Collision detection
+
 
         // Motion
         playerPosition.Y = NextPlayerPositionY;
