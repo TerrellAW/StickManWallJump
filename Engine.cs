@@ -24,6 +24,8 @@ public class Engine : Game
     float playerJumpForce;
     float playerSpeedX;
     float playerSpeedY;
+    float NextPlayerPositionX;
+    float NextPlayerPositionY;
     Vector2 playerPosition;
 
     // Game components
@@ -70,14 +72,20 @@ public class Engine : Game
 
         // Air friction
         playerSpeedX *= airFriction;
-        
+
         // Framerate based speed
         float updatedPlayerSpeedX = playerSpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;
         float updatedPlayerSpeedY = playerSpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+        // Position Prediction
+        NextPlayerPositionY = playerPosition.Y + updatedPlayerSpeedY;
+        NextPlayerPositionX = playerPosition.X + updatedPlayerSpeedX;
+
+        // Collision detection
+
         // Motion
-        playerPosition.Y += updatedPlayerSpeedY;
-        playerPosition.X += updatedPlayerSpeedX;
+        playerPosition.Y = NextPlayerPositionY;
+        playerPosition.X = NextPlayerPositionX;
 
         base.Update(gameTime);
     }
@@ -110,21 +118,21 @@ public class Engine : Game
 
         // Draw walls
         _spriteBatch.Draw(
-            wallTexture, 
-            new Vector2(-50, 0), 
-            null, 
-            Color.White, 
-            0f, 
-            Vector2.Zero, 
-            1f, 
-            SpriteEffects.FlipHorizontally, 
+            wallTexture,
+            new Vector2(-50, 0),
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            1f,
+            SpriteEffects.FlipHorizontally,
             0f
         );
         _spriteBatch.Draw(wallTexture, new Vector2(screenWidth - 50, 0), Color.White);
 
         // Draw player
         _spriteBatch.Draw(
-            playerTexture, 
+            playerTexture,
             playerPosition,
             null,
             Color.White,
