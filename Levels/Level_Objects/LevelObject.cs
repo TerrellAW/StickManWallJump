@@ -9,17 +9,17 @@ namespace StickManWallJump;
 internal abstract class LevelObject
 {
     public int ID { get; set; }
-    public string Name { get; set; }
-    public bool IsSolid { get; set; }
-    public bool IsVisible { get; set; }
-    public bool IsActive { get; set; }
+    public float X { get; set; }
+    public float Y { get; set; }
+    public float Width { get; set; }
+    public float Height { get; set; }
 
-    public LevelObject(int id, string name, bool isSolid, bool isVisible, bool isActive)
+    public LevelObject(int id, float x, float y, float width, float height)
     {
         ID = id;
-        Name = name;
-        IsSolid = isSolid;
-        IsVisible = isVisible;
-        IsActive = isActive;
+        X = x;
+        Y = y;
+        Width = width;
+        Height = height;
     }
 }
