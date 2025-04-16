@@ -485,7 +485,9 @@ $RECYCLE.BIN/
 *.swp
 
 # MonoGame
-Content/
+Content.mgcb
+bin/
+obj/
 
 # Visual Studio Code
 .vscode/
