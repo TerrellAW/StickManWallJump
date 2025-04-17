@@ -13,17 +13,17 @@ internal abstract class Entity
     // Texture
     public abstract Texture2D Texture { get; set; }
 
-    // Player constants
+    // Entity constants
     public abstract float MaxJumpForce { get; set; }
     public abstract float MinJumpForce { get; set; }
     public abstract float MaxSpeed { get; set; }
 
-    // Player variables
-    public abstract float JumpForce { get; set; }
-    public abstract float SpeedX { get; set; }
-    public abstract float SpeedY { get; set; }
-    public abstract float NextPositionX { get; set; }
-    public abstract float NextPositionY { get; set; }
-    public abstract Vector2 Position { get; set; }
-    public abstract bool facingRight { get; set; }
+    // Entity variables
+    public float JumpForce { get; set; }
+    public float SpeedX { get; set; }
+    public float SpeedY { get; set; }
+    public float NextPositionX { get; set; }
+    public float NextPositionY { get; set; }
+    public Vector2 Position { get; set; }
+    public bool facingRight { get; set; }
 }

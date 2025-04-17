@@ -18,24 +18,15 @@ internal class Player : Entity
     public override float MinJumpForce { get; set; } = 20f;
     public override float MaxSpeed { get; set; } = 400f;
 
-    // Player variables
-    public override float JumpForce { get; set; }
-    public override float SpeedX { get; set; }
-    public override float SpeedY { get; set; }
-    public override float NextPositionX { get; set; }
-    public override float NextPositionY { get; set; }
-    public override Vector2 Position { get; set; }
-    public override bool facingRight { get; set; }
-
     // Constructor
-    public Player()
+    public Player(Vector2 Position, float SpeedX, float SpeedY, float JumpForce, float NextPositionX, float NextPositionY, bool facingRight)
     {
-        Position = new Vector2(0, 0);
-        SpeedX = 0f;
-        SpeedY = 0f;
-        JumpForce = 0f;
-        NextPositionX = 0f;
-        NextPositionY = 0f;
-        facingRight = true; // Default facing right
+        this.Position = Position;
+        this.SpeedX = SpeedX;
+        this.SpeedY = SpeedY;
+        this.JumpForce = JumpForce;
+        this.NextPositionX = NextPositionX;
+        this.NextPositionY = NextPositionY;
+        this.facingRight = facingRight;
     }
 }
