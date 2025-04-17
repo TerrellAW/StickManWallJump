@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StickManWallJump;
 
-internal abstract class Level
+public class Level
 {
     /// <summary>
     /// 
@@ -16,6 +16,8 @@ internal abstract class Level
     /// 
     /// Lists that contain each level's objects, such as platforms and walls, will be stored in the level class.
     /// These lists will be used to check for collisions with the player in the engine class.
+    /// 
+    /// Level object instances will be defined in the LevelManager class, which will pass them to Engine in Program.cs.
     ///
     /// </summary>
 }

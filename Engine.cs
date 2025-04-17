@@ -27,11 +27,15 @@ public class Engine : Game
     // Player object
     internal static Player Player = new Player(new Vector2(340, 300), 0f, 0f, 0f, 0f, 0f, true); // TODO: Move to level class
 
-    public Engine()
+    // Level object
+    private Level level;
+
+    public Engine(Level level)
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
+        this.level = level; // Pass level to the engine
     }
 
     protected override void Initialize()
