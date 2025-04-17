@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StickManWallJump;
 
-internal class Wall : LevelObject
+public class Wall : LevelObject
 {
     // Texture
     public override Texture2D Texture { get; set; }

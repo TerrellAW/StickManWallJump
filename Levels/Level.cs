@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
@@ -20,4 +21,29 @@ public class Level
     /// Level object instances will be defined in the LevelManager class, which will pass them to Engine in Program.cs.
     ///
     /// </summary>
+
+    // Properties
+    public string Name { get; set; } = "Level 1"; // Default name
+    public string platformTexturePath { get; set; }
+    public string wallTexturePath { get; set; }
+    public List<Platform> Platforms { get; set; } = new List<Platform>();
+    public List<Wall> Walls { get; set; } = new List<Wall>();
+
+    // Constructor
+    public Level(string name, string platformTexturePath, string wallTexturePath)
+    {
+        Name = name;
+        this.platformTexturePath = platformTexturePath;
+        this.wallTexturePath = wallTexturePath;
+    }
+
+    //Methods
+    public string SetPlatformTexture()
+    {
+        return platformTexturePath;
+    }
+    public string SetWallTexture()
+    {
+        return wallTexturePath;
+    }
 }

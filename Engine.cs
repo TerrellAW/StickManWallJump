@@ -12,7 +12,10 @@ namespace StickManWallJump;
 
 public class Engine : Game
 {
-    // Textures
+    // Level object
+    public Level level;
+
+    // Level textures
     Texture2D platformTexture;
     Texture2D wallTexture;
 
@@ -26,9 +29,6 @@ public class Engine : Game
 
     // Player object
     internal static Player Player = new Player(new Vector2(340, 300), 0f, 0f, 0f, 0f, 0f, true); // TODO: Move to level class
-
-    // Level object
-    private Level level;
 
     public Engine(Level level)
     {
@@ -53,8 +53,8 @@ public class Engine : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        platformTexture = Content.Load<Texture2D>("platform");
-        wallTexture = Content.Load<Texture2D>("wall");
+        platformTexture = Content.Load<Texture2D>(level.SetPlatformTexture());
+        wallTexture = Content.Load<Texture2D>(level.SetWallTexture());
 
         Player.Texture = Content.Load<Texture2D>("stickman");
     }
