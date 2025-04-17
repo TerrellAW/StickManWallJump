@@ -25,7 +25,7 @@ public class Engine : Game
     private SpriteBatch _spriteBatch;
 
     // Player object
-    internal static Player Player = new Player();
+    internal static Player Player = new Player(new Vector2(340, 300), 0f, 0f, 0f, 0f, 0f, true); // TODO: Move to level class
 
     public Engine()
     {
@@ -44,15 +44,14 @@ public class Engine : Game
         base.Initialize();
     }
 
+    // TODO: Load textures in level class and pass them to the engine here
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // Level textures TODO: load from level class or platform/wall class
         platformTexture = Content.Load<Texture2D>("platform");
         wallTexture = Content.Load<Texture2D>("wall");
 
-        // Player texture TODO: load from player class
         Player.Texture = Content.Load<Texture2D>("stickman");
     }
 
