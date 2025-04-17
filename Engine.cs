@@ -15,29 +15,17 @@ public class Engine : Game
     // Textures
     Texture2D platformTexture;
     Texture2D wallTexture;
-    Texture2D playerTexture;
 
-    // Physics constants TODO: Store in a class
+    // Physics constants
     float gravity = 6.0f;
     float airFriction = 0.98f;
-
-    // Player constants TODO: Store in a class
-    float playerMaxJumpForce = 100f;
-    float playerMinJumpForce = 20f;
-    float playerMaxSpeed = 400f;
-
-    // Player variables TODO: Store in a class
-    float playerJumpForce;
-    float playerSpeedX;
-    float playerSpeedY;
-    float NextPlayerPositionX;
-    float NextPlayerPositionY;
-    Vector2 playerPosition;
-    bool facingRight = true;
 
     // Game components
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+
+    // Player object
+    internal static Player Player = new Player();
 
     public Engine()
     {
@@ -49,9 +37,9 @@ public class Engine : Game
     protected override void Initialize()
     {
         // Initialize player TODO: player position initialization from level class
-        playerPosition = new Vector2(340, 300);
-        playerSpeedX = 0f;
-        playerSpeedY = 0f;
+        Player.Position = new Vector2(340, 300);
+        Player.SpeedX = 0f;
+        Player.SpeedY = 0f;
 
         base.Initialize();
     }
@@ -65,7 +53,7 @@ public class Engine : Game
         wallTexture = Content.Load<Texture2D>("wall");
 
         // Player texture TODO: load from player class
-        playerTexture = Content.Load<Texture2D>("stickman");
+        Player.Texture = Content.Load<Texture2D>("stickman");
     }
 
     protected override void Update(GameTime gameTime)
@@ -74,27 +62,26 @@ public class Engine : Game
             Exit();
 
         // Gravity
-        if (playerSpeedY < playerMaxSpeed)
-            playerSpeedY += gravity;
+        if (Player.SpeedY < Player.MaxSpeed)
+            Player.SpeedY += gravity;
 
         // Air friction
-        playerSpeedX *= airFriction;
+        Player.SpeedX *= airFriction;
 
         // Framerate based speed
-        float updatedPlayerSpeedX = playerSpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        float updatedPlayerSpeedY = playerSpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float updatedPlayerSpeedX = Player.SpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float updatedPlayerSpeedY = Player.SpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         // Position Prediction
-        NextPlayerPositionY = playerPosition.Y + updatedPlayerSpeedY;
-        NextPlayerPositionX = playerPosition.X + updatedPlayerSpeedX;
+        Player.NextPositionY = Player.Position.Y + updatedPlayerSpeedY;
+        Player.NextPositionX = Player.Position.X + updatedPlayerSpeedX;
 
         // Collision detection
         // foreach loop that uses lists of platforms and walls to check for collisions based on their coords, height and width
         // lists will come from level class, each level will have its own lists of platforms and walls
 
         // Motion
-        playerPosition.Y = NextPlayerPositionY;
-        playerPosition.X = NextPlayerPositionX;
+        Player.Position = new Vector2(Player.NextPositionX, Player.NextPositionY);
 
         base.Update(gameTime);
     }
@@ -150,14 +137,14 @@ public class Engine : Game
         // Position from player class
         // Color from player class
         _spriteBatch.Draw(
-            playerTexture,
-            playerPosition,
+            Player.Texture,
+            Player.Position,
             null,
             Color.White,
             0f,
-            new Vector2(playerTexture.Width / 2, playerTexture.Height / 2),
+            new Vector2(Player.Texture.Width / 2, Player.Texture.Height / 2),
             Vector2.One,
-            facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally, // Flip sprite if not facing right
+            Player.facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally, // Flip sprite if not facing right
             0f
         );
 
