@@ -483,7 +483,6 @@ $RECYCLE.BIN/
 *.swp
 
 # MonoGame
-Content.mgcb
 bin/
 obj/
 
