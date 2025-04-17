@@ -48,7 +48,7 @@ public class Engine : Game
 
     protected override void Initialize()
     {
-        // Initialize player
+        // Initialize player TODO: player position initialization from level class
         playerPosition = new Vector2(340, 300);
         playerSpeedX = 0f;
         playerSpeedY = 0f;
@@ -60,11 +60,11 @@ public class Engine : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // Level textures
+        // Level textures TODO: load from level class or platform/wall class
         platformTexture = Content.Load<Texture2D>("platform");
         wallTexture = Content.Load<Texture2D>("wall");
 
-        // Player texture
+        // Player texture TODO: load from player class
         playerTexture = Content.Load<Texture2D>("stickman");
     }
 
