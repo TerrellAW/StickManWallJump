@@ -17,22 +17,23 @@ public class Engine : Game
     Texture2D wallTexture;
     Texture2D playerTexture;
 
-    // Physics constants
+    // Physics constants TODO: Store in a class
     float gravity = 6.0f;
     float airFriction = 0.98f;
 
-    // Player constants
+    // Player constants TODO: Store in a class
     float playerMaxJumpForce = 100f;
     float playerMinJumpForce = 20f;
     float playerMaxSpeed = 400f;
 
-    // Player variables
+    // Player variables TODO: Store in a class
     float playerJumpForce;
     float playerSpeedX;
     float playerSpeedY;
     float NextPlayerPositionX;
     float NextPlayerPositionY;
     Vector2 playerPosition;
+    bool facingRight = true;
 
     // Game components
     private GraphicsDeviceManager _graphics;
@@ -146,7 +147,7 @@ public class Engine : Game
             0f,
             new Vector2(playerTexture.Width / 2, playerTexture.Height / 2),
             Vector2.One,
-            SpriteEffects.None,
+            facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally, // Flip sprite if not facing right
             0f
         );
 
