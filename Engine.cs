@@ -112,7 +112,7 @@ public class Engine : Game
     /// <param name="gameTime"></param>
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black); // Background colour
+        GraphicsDevice.Clear(Color.Black); // Background colour TODO: color from level class
 
         // Screen dimensions
         int screenWidth = GraphicsDevice.Viewport.Width;
@@ -121,11 +121,17 @@ public class Engine : Game
         // Begin sprite batch
         _spriteBatch.Begin();
 
-        // Draw platforms
+        // Draw platforms TODO: Relocate to level class, some vars from platform class
+        // Texture from platform class
+        // Position from level class
+        // Color from level class
         _spriteBatch.Draw(platformTexture, new Vector2(100, 200), Color.White);
         _spriteBatch.Draw(platformTexture, new Vector2(300, 400), Color.White);
 
-        // Draw walls
+        // Draw walls TODO: Relocate to level class, some vars from wall class
+        // Texture from wall class
+        // Position from level class
+        // Color from level class
         _spriteBatch.Draw(
             wallTexture,
             new Vector2(-50, 0),
@@ -139,7 +145,10 @@ public class Engine : Game
         );
         _spriteBatch.Draw(wallTexture, new Vector2(screenWidth - 50, 0), Color.White);
 
-        // Draw player
+        // Draw player TODO: Relocate to player class, some vars from player class
+        // Texture from player class
+        // Position from player class
+        // Color from player class
         _spriteBatch.Draw(
             playerTexture,
             playerPosition,
