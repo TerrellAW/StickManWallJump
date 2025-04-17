@@ -13,6 +13,9 @@ internal abstract class Level
     /// Levels will have their own variables, such as ground/platform friction, so some levels are slippery and some aren't.
     /// Levels will also have their own textures, such as the background, platforms, and walls.
     /// Backgrounds will be audio visualizers that react to that level's music. Levels will have different music.
+    /// 
+    /// Lists that contain each level's objects, such as platforms and walls, will be stored in the level class.
+    /// These lists will be used to check for collisions with the player in the engine class.
     ///
     /// </summary>
 }

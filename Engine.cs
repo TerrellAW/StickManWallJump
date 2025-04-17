@@ -89,7 +89,8 @@ public class Engine : Game
         NextPlayerPositionX = playerPosition.X + updatedPlayerSpeedX;
 
         // Collision detection
-
+        // foreach loop that uses lists of platforms and walls to check for collisions based on their coords, height and width
+        // lists will come from level class, each level will have its own lists of platforms and walls
 
         // Motion
         playerPosition.Y = NextPlayerPositionY;
