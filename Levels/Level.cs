@@ -28,6 +28,7 @@ public class Level
     public string wallTexturePath { get; set; }
     public List<Platform> Platforms { get; set; } = new List<Platform>();
     public List<Wall> Walls { get; set; } = new List<Wall>();
+    public Player Player { get; set; }
 
     // Constructor
     public Level(string name, string platformTexturePath, string wallTexturePath)
@@ -38,6 +39,8 @@ public class Level
     }
 
     //Methods
+
+    // Textures
     public string SetPlatformTexture()
     {
         return platformTexturePath;
@@ -45,5 +48,17 @@ public class Level
     public string SetWallTexture()
     {
         return wallTexturePath;
+    }
+
+    // Add objects to the level
+    public void AddPlatform(float x, float y)
+    {
+        int id = Platforms.Count + 1; // Unique ID for each platform
+        Platforms.Add(new Platform(id, x, y));
+    }
+    public void AddWall(float x, float y)
+    {
+        int id = Walls.Count + 1; // Unique ID for each wall
+        Walls.Add(new Wall(id, x, y));
     }
 }

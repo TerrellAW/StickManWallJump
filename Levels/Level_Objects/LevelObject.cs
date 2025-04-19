@@ -12,16 +12,12 @@ public abstract class LevelObject
     public int ID { get; set; }
     public float X { get; set; }
     public float Y { get; set; }
-    public float Width { get; set; }
-    public float Height { get; set; }
 
     // Constructor
-    public LevelObject(int id, float x, float y, float width, float height)
+    public LevelObject(int id, float x, float y)
     {
         ID = id;
         X = x;
         Y = y;
-        Width = width;
-        Height = height;
     }
 }

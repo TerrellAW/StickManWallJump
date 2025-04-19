@@ -8,6 +8,7 @@ namespace StickManWallJump;
 /// TODO: 
 /// - Store variables/objects for platforms and walls
 /// - Dynamic collision detection system that can be easily extended to other objects
+/// - Get height and width from sprites for collision system
 /// </summary>
 
 public class Engine : Game
@@ -88,7 +89,6 @@ public class Engine : Game
 
         base.Update(gameTime);
     }
-
 
     /// <summary>
     /// Draws the game.

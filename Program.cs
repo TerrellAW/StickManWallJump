@@ -2,5 +2,6 @@
 
 Level level1 = new Level("Level 1", "platform", "wall");
 
-using var game = new Engine(level1); // Add parameters for switching levels, menus, etc.
+// Add conditions for switching levels, menus, etc.
+using var game = new Engine(level1);
 game.Run();

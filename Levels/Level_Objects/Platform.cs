@@ -9,12 +9,10 @@ namespace StickManWallJump;
 public class Platform : LevelObject
 {
     // Constructor
-    public Platform(int id, float x, float y, float width, float height) : base(id, x, y, width, height)
+    public Platform(int id, float x, float y) : base(id, x, y)
     {
         this.ID = id;
         this.X = x;
         this.Y = y;
-        this.Width = width;
-        this.Height = height;
     }
 }
