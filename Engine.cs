@@ -122,9 +122,7 @@ public class Engine : Game
         // Begin sprite batch
         _spriteBatch.Begin();
 
-        // Draw platforms TODO: Relocate to level class, some vars from platform class
-        // Texture from platform class
-        // Position from level class
+        // Draw platforms TODO:
         // Color from level class
         foreach (var platform in level.Platforms)
         {
@@ -135,9 +133,7 @@ public class Engine : Game
             );
         }
 
-        // Draw walls TODO: Relocate to level class, some vars from wall class
-        // Texture from wall class
-        // Position from level class
+        // Draw walls TODO:
         // Color from level class
         foreach (var wall in level.Walls)
         {
