@@ -29,6 +29,7 @@ public class Level
     public List<Platform> Platforms { get; set; } = new List<Platform>();
     public List<Wall> Walls { get; set; } = new List<Wall>();
     public Player Player { get; set; }
+    public int ScreenWidth { get; set; }
 
     // Constructor
     public Level(string name, string platformTexturePath, string wallTexturePath)
