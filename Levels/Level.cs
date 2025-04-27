@@ -31,14 +31,16 @@ public class Level
     public Player Player { get; set; }
     public int ScreenWidth { get; set; }
     public Color FilterColor { get; set; } // Color filter for the level
+    public Color BackgroundColor { get; set; } // Background color for the level
 
     // Constructor
-    public Level(string name, string platformTexturePath, string wallTexturePath, Color filterColor)
+    public Level(string name, string platformTexturePath, string wallTexturePath, Color filterColor, Color backgroundColor)
     {
         Name = name;
         this.platformTexturePath = platformTexturePath;
         this.wallTexturePath = wallTexturePath;
         FilterColor = filterColor;
+        BackgroundColor = backgroundColor;
     }
 
     //Methods

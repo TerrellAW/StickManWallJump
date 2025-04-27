@@ -23,6 +23,7 @@ public class Engine : Game
 
     // Colors
     Color levelFilterColor;
+    Color levelBackgroundColor;
 
     // Physics constants TODO: Get value from to level class
     float gravity = 6.0f;
@@ -59,8 +60,9 @@ public class Engine : Game
         // Get level
         level = _levelManager.GetLevel(_levelName);
 
-        // Get level filter color
+        // Get level colors
         levelFilterColor = level.FilterColor;
+        levelBackgroundColor = level.BackgroundColor;
 
         // Initialize player TODO: player position initialization from level class
         Player.Position = new Vector2(340, 300);
@@ -123,7 +125,7 @@ public class Engine : Game
     /// <param name="gameTime"></param>
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black); // Background colour TODO: color from level class
+        GraphicsDevice.Clear(levelBackgroundColor);
 
         // Begin sprite batch
         _spriteBatch.Begin();
@@ -154,13 +156,12 @@ public class Engine : Game
             );
         }
 
-        // Draw player TODO:
-        // Color from level class
+        // Draw player
         _spriteBatch.Draw(
             Player.Texture,
             Player.Position,
             null,
-            Color.White,
+            levelFilterColor,
             0f,
             new Vector2(Player.Texture.Width / 2, Player.Texture.Height / 2),
             Vector2.One,
