@@ -150,9 +150,7 @@ public class Engine : Game
             );
         }
 
-        // Draw player TODO: Relocate to player class, some vars from player class
-        // Texture from player class
-        // Position from player class
+        // Draw player TODO:
         // Color from player class
         _spriteBatch.Draw(
             Player.Texture,
