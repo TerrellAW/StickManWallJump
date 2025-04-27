@@ -30,13 +30,15 @@ public class Level
     public List<Wall> Walls { get; set; } = new List<Wall>();
     public Player Player { get; set; }
     public int ScreenWidth { get; set; }
+    public Color FilterColor { get; set; } // Color filter for the level
 
     // Constructor
-    public Level(string name, string platformTexturePath, string wallTexturePath)
+    public Level(string name, string platformTexturePath, string wallTexturePath, Color filterColor)
     {
         Name = name;
         this.platformTexturePath = platformTexturePath;
         this.wallTexturePath = wallTexturePath;
+        FilterColor = filterColor;
     }
 
     //Methods

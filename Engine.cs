@@ -21,7 +21,10 @@ public class Engine : Game
     Texture2D platformTexture;
     Texture2D wallTexture;
 
-    // Physics constants
+    // Colors
+    Color levelFilterColor;
+
+    // Physics constants TODO: Get value from to level class
     float gravity = 6.0f;
     float airFriction = 0.98f;
 
@@ -55,6 +58,9 @@ public class Engine : Game
 
         // Get level
         level = _levelManager.GetLevel(_levelName);
+
+        // Get level filter color
+        levelFilterColor = level.FilterColor;
 
         // Initialize player TODO: player position initialization from level class
         Player.Position = new Vector2(340, 300);
@@ -122,26 +128,24 @@ public class Engine : Game
         // Begin sprite batch
         _spriteBatch.Begin();
 
-        // Draw platforms TODO:
-        // Color from level class
+        // Draw platforms
         foreach (var platform in level.Platforms)
         {
             _spriteBatch.Draw(
                 platformTexture,
                 new Vector2(platform.X, platform.Y),
-                Color.White
+                levelFilterColor
             );
         }
 
-        // Draw walls TODO:
-        // Color from level class
+        // Draw walls
         foreach (var wall in level.Walls)
         {
             _spriteBatch.Draw(
                 wallTexture,
                 new Vector2(wall.X, wall.Y),
                 null,
-                Color.White,
+                levelFilterColor,
                 0f,
                 Vector2.Zero,
                 1f,
@@ -151,7 +155,7 @@ public class Engine : Game
         }
 
         // Draw player TODO:
-        // Color from player class
+        // Color from level class
         _spriteBatch.Draw(
             Player.Texture,
             Player.Position,

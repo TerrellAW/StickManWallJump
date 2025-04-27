@@ -24,7 +24,7 @@ public class LevelManager
 
     public void CreateLevel1(string levelName, string platformTexture, string wallTexture, int screenWidth)
     {
-        _currentLevel = new Level(levelName, platformTexture, wallTexture);
+        _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White);
 
         // Add platforms TODO: Make this more dynamic, props or parameters or objects
         _currentLevel.AddPlatform(100, 200);
