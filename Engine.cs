@@ -15,6 +15,7 @@ public class Engine : Game
 {
     // Level object
     public Level level;
+    private string _levelName;
 
     // Level textures
     Texture2D platformTexture;
@@ -27,20 +28,34 @@ public class Engine : Game
     // Game components
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private LevelManager _levelManager;
 
     // Player object
     internal static Player Player = new Player(new Vector2(340, 300), 0f, 0f, 0f, 0f, 0f, true); // TODO: Move to level class
 
-    public Engine(Level level)
+    public Engine(LevelManager levelManager, string levelName)
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
-        this.level = level; // Pass level to the engine
+
+        // Store for use in initializer
+        this._levelManager = levelManager;
+        this._levelName = levelName;
     }
 
     protected override void Initialize()
     {
+        // Screen dimensions
+        int screenWidth = GraphicsDevice.Viewport.Width;
+        int screenHeight = GraphicsDevice.Viewport.Height;
+
+        // Create level
+        _levelManager.CreateLevel1(_levelName, "platform", "wall", screenWidth);
+
+        // Get level
+        level = _levelManager.GetLevel(_levelName);
+
         // Initialize player TODO: player position initialization from level class
         Player.Position = new Vector2(340, 300);
         Player.SpeedX = 0f;
@@ -104,10 +119,6 @@ public class Engine : Game
     {
         GraphicsDevice.Clear(Color.Black); // Background colour TODO: color from level class
 
-        // Screen dimensions
-        int screenWidth = GraphicsDevice.Viewport.Width;
-        int screenHeight = GraphicsDevice.Viewport.Height;
-
         // Begin sprite batch
         _spriteBatch.Begin();
 
@@ -115,25 +126,33 @@ public class Engine : Game
         // Texture from platform class
         // Position from level class
         // Color from level class
-        _spriteBatch.Draw(platformTexture, new Vector2(100, 200), Color.White);
-        _spriteBatch.Draw(platformTexture, new Vector2(300, 400), Color.White);
+        foreach (var platform in level.Platforms)
+        {
+            _spriteBatch.Draw(
+                platformTexture,
+                new Vector2(platform.X, platform.Y),
+                Color.White
+            );
+        }
 
         // Draw walls TODO: Relocate to level class, some vars from wall class
         // Texture from wall class
         // Position from level class
         // Color from level class
-        _spriteBatch.Draw(
-            wallTexture,
-            new Vector2(-50, 0),
-            null,
-            Color.White,
-            0f,
-            Vector2.Zero,
-            1f,
-            SpriteEffects.FlipHorizontally,
-            0f
-        );
-        _spriteBatch.Draw(wallTexture, new Vector2(screenWidth - 50, 0), Color.White);
+        foreach (var wall in level.Walls)
+        {
+            _spriteBatch.Draw(
+                wallTexture,
+                new Vector2(wall.X, wall.Y),
+                null,
+                Color.White,
+                0f,
+                Vector2.Zero,
+                1f,
+                wall.FacingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally, // Flip sprite if not facing right
+                0f
+            );
+        }
 
         // Draw player TODO: Relocate to player class, some vars from player class
         // Texture from player class
@@ -147,7 +166,7 @@ public class Engine : Game
             0f,
             new Vector2(Player.Texture.Width / 2, Player.Texture.Height / 2),
             Vector2.One,
-            Player.facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally, // Flip sprite if not facing right
+            Player.FacingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally, // Flip sprite if not facing right
             0f
         );
 

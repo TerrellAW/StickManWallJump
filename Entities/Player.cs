@@ -27,6 +27,6 @@ public class Player : Entity
         this.JumpForce = JumpForce;
         this.NextPositionX = NextPositionX;
         this.NextPositionY = NextPositionY;
-        this.facingRight = facingRight;
+        this.FacingRight = facingRight;
     }
 }

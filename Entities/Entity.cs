@@ -25,5 +25,5 @@ public abstract class Entity
     public float NextPositionX { get; set; }
     public float NextPositionY { get; set; }
     public Vector2 Position { get; set; }
-    public bool facingRight { get; set; }
+    public bool FacingRight { get; set; }
 }

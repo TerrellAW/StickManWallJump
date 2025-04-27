@@ -23,7 +23,7 @@ public class Level
     /// </summary>
 
     // Properties
-    public string Name { get; set; } = "Level 1"; // Default name
+    public string Name { get; set; }
     public string platformTexturePath { get; set; }
     public string wallTexturePath { get; set; }
     public List<Platform> Platforms { get; set; } = new List<Platform>();
@@ -57,9 +57,9 @@ public class Level
         int id = Platforms.Count + 1; // Unique ID for each platform
         Platforms.Add(new Platform(id, x, y));
     }
-    public void AddWall(float x, float y)
+    public void AddWall(float x, float y, bool facingRight)
     {
         int id = Walls.Count + 1; // Unique ID for each wall
-        Walls.Add(new Wall(id, x, y));
+        Walls.Add(new Wall(id, x, y, facingRight));
     }
 }

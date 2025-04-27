@@ -1,7 +1,9 @@
-﻿using StickManWallJump;
+﻿using Microsoft.Xna.Framework;
+using StickManWallJump;
 
-Level level1 = new Level("Level 1", "platform", "wall");
+// Create level manager
+LevelManager levelManager = new LevelManager();
 
 // Add conditions for switching levels, menus, etc.
-using var game = new Engine(level1);
+using var game = new Engine(levelManager, "Level1");
 game.Run();
