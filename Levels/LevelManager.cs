@@ -27,12 +27,12 @@ public class LevelManager
         _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White, Color.Black);
 
         // Add platforms TODO: Make this more dynamic, props or parameters or objects
-        _currentLevel.AddPlatform(100, 200);
-        _currentLevel.AddPlatform(300, 400);
+        _currentLevel.AddPlatform(100, 200, true);
+        _currentLevel.AddPlatform(300, 400, true);
 
         // Add walls TODO: Make this more dynamic, props or parameters or objects
-        _currentLevel.AddWall(-50, 0, false); // Left wall
-        _currentLevel.AddWall(screenWidth - 50, 0, true); // Right wall
+        _currentLevel.AddWall(-50, 0, true, false); // Left wall
+        _currentLevel.AddWall(screenWidth - 50, 0, true, true); // Right wall
         // Gonna need to pass screen width and height to level manager for object placement
         // Gonna need to add facing direction to wall objects
 

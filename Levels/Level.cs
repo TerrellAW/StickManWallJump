@@ -56,14 +56,14 @@ public class Level
     }
 
     // Add objects to the level
-    public void AddPlatform(float x, float y)
+    public void AddPlatform(float x, float y, bool isSolid)
     {
         int id = Platforms.Count + 1; // Unique ID for each platform
-        Platforms.Add(new Platform(id, x, y));
+        Platforms.Add(new Platform(id, x, y, isSolid));
     }
-    public void AddWall(float x, float y, bool facingRight)
+    public void AddWall(float x, float y, bool isSolid, bool facingRight)
     {
         int id = Walls.Count + 1; // Unique ID for each wall
-        Walls.Add(new Wall(id, x, y, facingRight));
+        Walls.Add(new Wall(id, x, y, isSolid, facingRight));
     }
 }

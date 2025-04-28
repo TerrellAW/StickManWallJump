@@ -26,4 +26,8 @@ public abstract class Entity
     public float NextPositionY { get; set; }
     public Vector2 Position { get; set; }
     public bool FacingRight { get; set; }
+
+    // Collision bounds
+    public Rectangle CollisionBounds { get; set; }
+    public Rectangle CollisionBoundsNext { get; set; }
 }

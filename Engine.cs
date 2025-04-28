@@ -106,6 +106,16 @@ public class Engine : Game
         // Collision detection
         // foreach loop that uses lists of platforms and walls to check for collisions based on their coords, height and width
         // lists will come from level class, each level will have its own lists of platforms and walls
+        // only detect collision if isSolid is true
+        foreach (var platform in level.Platforms)
+        {
+            if (platform.isSolid && Player.NextPositionY + Player.Texture.Height >= platform.Y && Player.NextPositionY <= platform.Y + platform.Height)
+            {
+                // Collision detected, stop player from falling through the platform
+                Player.SpeedY = 0f;
+                Player.NextPositionY = platform.Y - Player.Texture.Height; // Set player position to the top of the platform
+            }
+        }
 
         // Motion
         Player.Position = new Vector2(Player.NextPositionX, Player.NextPositionY);

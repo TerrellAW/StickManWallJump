@@ -28,5 +28,7 @@ public class Player : Entity
         this.NextPositionX = NextPositionX;
         this.NextPositionY = NextPositionY;
         this.FacingRight = facingRight;
+        this.CollisionBounds = new Rectangle((int)Position.X, (int)Position.Y, 24, 49); // Player is 24x49 pixels
+        this.CollisionBoundsNext = new Rectangle((int)NextPositionX, (int)NextPositionY, 24, 49); // Player is 24x49 pixels
     }
 }
