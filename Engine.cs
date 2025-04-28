@@ -103,7 +103,7 @@ public class Engine : Game
         Player.NextPositionY = Player.Position.Y + updatedPlayerSpeedY;
         Player.NextPositionX = Player.Position.X + updatedPlayerSpeedX;
 
-        // Collision detection
+        // Collision detection TODO: Fix, offset somewhere, either player rectangle or platform/wall height/width
         // foreach loop that uses lists of platforms and walls to check for collisions based on their coords, height and width
         // lists will come from level class, each level will have its own lists of platforms and walls
         // only detect collision if isSolid is true
