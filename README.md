@@ -30,3 +30,7 @@ To run debug mode use this command:
 ```
 dotnet run -- --debug
 ```
+Or run:
+```
+dotnet run -- -d
+```
