@@ -25,9 +25,7 @@ dotnet mgcb-editor Content/Content.mgcb
 - If textures don't load verify the Content directory structure. Images used for textures should be in the Content directory itself.
 - Check that file names match exactly.
 - Ensure MonoGame content has been properly built.
-
-
-**Debug Mode**
+### Debug Mode
 To run debug mode use this command:
 ```
 dotnet run -- --debug
