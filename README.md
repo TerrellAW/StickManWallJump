@@ -34,3 +34,11 @@ Or run:
 ```
 dotnet run -- -d
 ```
+In a version compiled for windows the command would be:
+```
+StickManWallJump.exe --debug
+```
+Or run:
+```
+StickManWallJump.exe -d
+```
