@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
@@ -16,6 +12,9 @@ public abstract class LevelObject
     public float Height { get; set; } // Height of the object
     public bool isSolid; // Determines if the object is solid or not
 
+    // Collision bounds
+    public Rectangle CollisionBounds { get; set; }
+
     // Constructor
     public LevelObject(int id, float x, float y, bool isSolid)
     {
@@ -25,5 +24,6 @@ public abstract class LevelObject
         Width = 0; // Default value, can be set later
         Height = 0; // Default value, can be set later
         this.isSolid = isSolid;
+        CollisionBounds = new Rectangle((int)X, (int)Y, (int)Width, (int)Height);
     }
 }

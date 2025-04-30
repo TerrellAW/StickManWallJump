@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
@@ -17,5 +13,6 @@ public class Platform : LevelObject
         this.Width = 81; // Image is 81 pixels wide
         this.Height = 9; // Image is 9 pixels tall
         this.isSolid = isSolid;
+        this.CollisionBounds = new Rectangle((int)X, (int)Y, (int)Width, (int)Height);
     }
 }

@@ -20,12 +20,13 @@ public class Engine : Game
     // Level textures
     Texture2D platformTexture;
     Texture2D wallTexture;
+    private Texture2D _debugTexture;
 
     // Colors
     Color levelFilterColor;
     Color levelBackgroundColor;
 
-    // Physics constants TODO: Get value from to level class
+    // Physics constants TODO: Get value from level class
     float gravity = 6.0f;
     float airFriction = 0.98f;
 
@@ -37,7 +38,10 @@ public class Engine : Game
     // Player object
     internal static Player Player = new Player(new Vector2(340, 300), 0f, 0f, 0f, 0f, 0f, true); // TODO: Move to level class
 
-    public Engine(LevelManager levelManager, string levelName)
+    // Debug mode
+    private bool _debugMode;
+
+    public Engine(LevelManager levelManager, string levelName, bool debugMode = false)
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
@@ -46,6 +50,7 @@ public class Engine : Game
         // Store for use in initializer
         this._levelManager = levelManager;
         this._levelName = levelName;
+        this._debugMode = debugMode;
     }
 
     protected override void Initialize()
@@ -81,6 +86,10 @@ public class Engine : Game
         wallTexture = Content.Load<Texture2D>(level.SetWallTexture());
 
         Player.Texture = Content.Load<Texture2D>("stickman");
+
+        // Debug 1x1 white texture
+        _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+        _debugTexture.SetData(new[] { Color.White });
     }
 
     protected override void Update(GameTime gameTime)
@@ -103,17 +112,120 @@ public class Engine : Game
         Player.NextPositionY = Player.Position.Y + updatedPlayerSpeedY;
         Player.NextPositionX = Player.Position.X + updatedPlayerSpeedX;
 
-        // Collision detection TODO: Fix, offset somewhere, either player rectangle or platform/wall height/width
-        // foreach loop that uses lists of platforms and walls to check for collisions based on their coords, height and width
-        // lists will come from level class, each level will have its own lists of platforms and walls
-        // only detect collision if isSolid is true
-        foreach (var platform in level.Platforms)
+        // Player collision bounds update
+        Player.CollisionBounds = new Rectangle(
+            (int)Player.Position.X - (Player.Texture.Width / 2),
+            (int)Player.Position.Y - (Player.Texture.Height / 2),
+            Player.Texture.Width,
+            Player.Texture.Height
+        );
+
+        // Player collision bounds next update
+        Player.CollisionBoundsNext = new Rectangle(
+            (int)Player.NextPositionX - (Player.Texture.Width / 2),
+            (int)Player.NextPositionY - (Player.Texture.Height / 2),
+            Player.Texture.Width,
+            Player.Texture.Height
+        );
+
+        // Check for collisions
+        foreach (var platform in level.Platforms) // Platform collisions
         {
-            if (platform.isSolid && Player.NextPositionY + Player.Texture.Height >= platform.Y && Player.NextPositionY <= platform.Y + platform.Height)
+            if (platform.isSolid && Player.CollisionBoundsNext.Intersects(platform.CollisionBounds))
             {
-                // Collision detected, stop player from falling through the platform
-                Player.SpeedY = 0f;
-                Player.NextPositionY = platform.Y - Player.Texture.Height; // Set player position to the top of the platform
+                // Calculate movement direction
+                bool movingDown = Player.SpeedY > 0;
+                bool movingUp = Player.SpeedY < 0;
+
+                // For platforms, we're most concerned with top/bottom collisions
+
+                // Top collision (player landing on platform) - this is most common
+                if (movingDown && Player.CollisionBounds.Bottom <= platform.CollisionBounds.Top + 5)
+                {
+                    // Player landed on top of platform
+                    Player.NextPositionY = platform.CollisionBounds.Top - Player.Texture.Height / 2;
+                    Player.SpeedY = 0;
+                }
+                // Bottom collision (player hitting platform from below)
+                else if (movingUp && Player.CollisionBounds.Top >= platform.CollisionBounds.Bottom - 5)
+                {
+                    Player.NextPositionY = platform.CollisionBounds.Bottom + Player.Texture.Height / 2;
+                    Player.SpeedY = 0;
+                }
+                // Handle horizontal collisions with platforms as well
+                else
+                {
+                    // Left collision with platform
+                    if (Player.SpeedX > 0 && Player.CollisionBounds.Right <= platform.CollisionBounds.Left + 5)
+                    {
+                        Player.NextPositionX = platform.CollisionBounds.Left - Player.Texture.Width / 2;
+                        Player.SpeedX = 0;
+                    }
+                    // Right collision with platform
+                    else if (Player.SpeedX < 0 && Player.CollisionBounds.Left >= platform.CollisionBounds.Right - 5)
+                    {
+                        Player.NextPositionX = platform.CollisionBounds.Right + Player.Texture.Width / 2;
+                        Player.SpeedX = 0;
+                    }
+                }
+
+                // Update next position collision bounds after adjustment
+                Player.CollisionBoundsNext = new Rectangle(
+                    (int)Player.NextPositionX - (Player.Texture.Width / 2),
+                    (int)Player.NextPositionY - (Player.Texture.Height / 2),
+                    Player.Texture.Width,
+                    Player.Texture.Height
+                );
+            }
+        }
+        foreach (var wall in level.Walls) // Wall collisions
+        {
+            if (wall.isSolid && Player.CollisionBoundsNext.Intersects(wall.CollisionBounds))
+            {
+                // Calculate movement direction
+                bool movingRight = Player.SpeedX > 0;
+                bool movingLeft = Player.SpeedX < 0;
+                bool movingDown = Player.SpeedY > 0;
+                bool movingUp = Player.SpeedY < 0;
+
+                // For walls, prioritize horizontal collisions
+
+                // Left collision (player hitting wall from the left)
+                if (movingRight && Player.CollisionBounds.Right <= wall.CollisionBounds.Left &&
+                    Player.CollisionBoundsNext.Right >= wall.CollisionBounds.Left)
+                {
+                    Player.NextPositionX = wall.CollisionBounds.Left - Player.Texture.Width / 2;
+                    Player.SpeedX = 0;
+                }
+                // Right collision (player hitting wall from the right)
+                else if (movingLeft && Player.CollisionBounds.Left >= wall.CollisionBounds.Right &&
+                        Player.CollisionBoundsNext.Left <= wall.CollisionBounds.Right)
+                {
+                    Player.NextPositionX = wall.CollisionBounds.Right + Player.Texture.Width / 2;
+                    Player.SpeedX = 0;
+                }
+                // Top collision (player landing on top of wall)
+                else if (movingDown && Player.CollisionBounds.Bottom <= wall.CollisionBounds.Top &&
+                        Player.CollisionBoundsNext.Bottom >= wall.CollisionBounds.Top)
+                {
+                    Player.NextPositionY = wall.CollisionBounds.Top - Player.Texture.Height / 2;
+                    Player.SpeedY = 0;
+                }
+                // Bottom collision (player hitting wall from below)
+                else if (movingUp && Player.CollisionBounds.Top >= wall.CollisionBounds.Bottom &&
+                        Player.CollisionBoundsNext.Top <= wall.CollisionBounds.Bottom)
+                {
+                    Player.NextPositionY = wall.CollisionBounds.Bottom + Player.Texture.Height / 2;
+                    Player.SpeedY = 0;
+                }
+
+                // Update next position collision bounds after adjustment
+                Player.CollisionBoundsNext = new Rectangle(
+                    (int)Player.NextPositionX - (Player.Texture.Width / 2),
+                    (int)Player.NextPositionY - (Player.Texture.Height / 2),
+                    Player.Texture.Width,
+                    Player.Texture.Height
+                );
             }
         }
 
@@ -179,9 +291,42 @@ public class Engine : Game
             0f
         );
 
+        // Draw debug info
+        if (_debugMode)
+        {
+            // Draw player collision bounds
+            DrawRectangle(Player.CollisionBounds, Color.Red, 4);
+            DrawRectangle(Player.CollisionBoundsNext, Color.Yellow, 2);
+
+            // Draw platform collision bounds
+            foreach (var platform in level.Platforms)
+            {
+                DrawRectangle(platform.CollisionBounds, Color.Blue, 2);
+            }
+
+            // Draw wall collision bounds
+            foreach (var wall in level.Walls)
+            {
+                DrawRectangle(wall.CollisionBounds, Color.Green, 2);
+            }
+        }
+
         // End sprite batch
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    // Draw collision boundaries for debugging
+    private void DrawRectangle(Rectangle rectangle, Color color, int lineWidth = 1)
+    {
+        // Draw top line
+        _spriteBatch.Draw(_debugTexture, new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, lineWidth), color);
+        // Draw bottom line
+        _spriteBatch.Draw(_debugTexture, new Rectangle(rectangle.X, rectangle.Y + rectangle.Height - lineWidth, rectangle.Width, lineWidth), color);
+        // Draw left line
+        _spriteBatch.Draw(_debugTexture, new Rectangle(rectangle.X, rectangle.Y, lineWidth, rectangle.Height), color);
+        // Draw right line
+        _spriteBatch.Draw(_debugTexture, new Rectangle(rectangle.X + rectangle.Width - lineWidth, rectangle.Y, lineWidth, rectangle.Height), color);
     }
 }
