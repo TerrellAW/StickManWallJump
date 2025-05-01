@@ -29,6 +29,10 @@ public class Level
     public Color FilterColor { get; set; } // Color filter for the level
     public Color BackgroundColor { get; set; } // Background color for the level
 
+    // Physics properties
+    public float Gravity = 6.0f; // Default gravity value
+    public float AirFriction = 0.98f; // Default air friction value
+
     // Constructor
     public Level(string name, string platformTexturePath, string wallTexturePath, Color filterColor, Color backgroundColor)
     {

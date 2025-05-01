@@ -4,13 +4,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace StickManWallJump;
 
-/// <summary>
-/// TODO: 
-/// - Store variables/objects for platforms and walls
-/// - Dynamic collision detection system that can be easily extended to other objects
-/// - Get height and width from sprites for collision system
-/// </summary>
-
 public class Engine : Game
 {
     // Level object
@@ -26,9 +19,9 @@ public class Engine : Game
     Color levelFilterColor;
     Color levelBackgroundColor;
 
-    // Physics constants TODO: Get value from level class
-    float gravity = 6.0f;
-    float airFriction = 0.98f;
+    // Physics constants
+    float gravity;
+    float airFriction;
 
     // Game components
     private GraphicsDeviceManager _graphics;
@@ -68,6 +61,10 @@ public class Engine : Game
         // Get level colors
         levelFilterColor = level.FilterColor;
         levelBackgroundColor = level.BackgroundColor;
+
+        // Set physics constants
+        gravity = level.Gravity;
+        airFriction = level.AirFriction;
 
         // Initialize player TODO: player position initialization from level class
         Player.Position = new Vector2(340, 300);
