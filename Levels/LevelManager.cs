@@ -35,7 +35,7 @@ public class LevelManager
         // Gonna need to add facing direction to wall objects
 
         // Set player position
-        _currentLevel.Player = new Player(new Vector2(340, 300), 0f, 0f, 0f, 0f, 0f, true);
+        _currentLevel.Player = new Player(new Vector2(140, 50), 0f, 0f, 0f, 0f, 0f, true);
 
         _levels.Add(_currentLevel.Name, _currentLevel);
     }
