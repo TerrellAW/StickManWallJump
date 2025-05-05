@@ -28,6 +28,7 @@ public class Level
     public int ScreenWidth { get; set; }
     public Color FilterColor { get; set; } // Color filter for the level
     public Color BackgroundColor { get; set; } // Background color for the level
+    public float PlayerSpeed { get; set; } = 60f; // Default player speed
 
     // Physics properties
     public float Gravity = 6.0f; // Default gravity value

@@ -54,7 +54,7 @@ public class Engine : Game
         int screenHeight = GraphicsDevice.Viewport.Height;
 
         // Create level TODO: Replace with function that matches level name and loads correct function from level manager
-        _levelManager.CreateLevel1(_levelName, "Textures/platform", "Textures/wall", screenWidth);
+        _levelManager.CreateLevel1(_levelName, "Textures/platform", "Textures/wall", screenWidth, 60f);
 
         // Get level
         level = _levelManager.GetLevel(_levelName);
@@ -66,10 +66,6 @@ public class Engine : Game
         // Set physics constants
         gravity = level.Gravity;
         airFriction = level.AirFriction;
-
-        // Initializelevel.Player TODO:level.Player position initialization from level class
-        level.Player.SpeedX = 60f;
-        level.Player.SpeedY = 0f;
 
         base.Initialize();
     }
@@ -103,7 +99,7 @@ public class Engine : Game
         if (Math.Abs(level.Player.SpeedY) > 0.01f)
             level.Player.SpeedX *= airFriction;
         else // No air friction if grounded
-            level.Player.SpeedX = 60f; // TODO: Variable from level class for uniformity
+            level.Player.SpeedX = level.PlayerSpeed;
 
         // Gravity
         if (level.Player.SpeedY < level.Player.MaxSpeed)

@@ -20,7 +20,7 @@ public class LevelManager
         }
     }
 
-    public void CreateLevel1(string levelName, string platformTexture, string wallTexture, int screenWidth)
+    public void CreateLevel1(string levelName, string platformTexture, string wallTexture, int screenWidth, float playerSpeed)
     {
         _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White, Color.Black);
 
@@ -35,7 +35,8 @@ public class LevelManager
         // Gonna need to add facing direction to wall objects
 
         // Set player position
-        _currentLevel.Player = new Player(new Vector2(140, 50), 0f, 0f, 0f, 0f, 0f, true);
+        _currentLevel.Player = new Player(new Vector2(140, 50), playerSpeed, 0f, 0f, 0f, 0f, true);
+        _currentLevel.PlayerSpeed = playerSpeed;
 
         _levels.Add(_currentLevel.Name, _currentLevel);
     }
