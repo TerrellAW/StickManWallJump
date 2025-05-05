@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -67,7 +68,7 @@ public class Engine : Game
         airFriction = level.AirFriction;
 
         // Initializelevel.Player TODO:level.Player position initialization from level class
-        level.Player.SpeedX = 0f;
+        level.Player.SpeedX = 60f;
         level.Player.SpeedY = 0f;
 
         base.Initialize();
@@ -98,12 +99,15 @@ public class Engine : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        // Air friction
+        if (Math.Abs(level.Player.SpeedY) > 0.01f)
+            level.Player.SpeedX *= airFriction;
+        else // No air friction if grounded
+            level.Player.SpeedX = 60f; // TODO: Variable from level class for uniformity
+
         // Gravity
         if (level.Player.SpeedY < level.Player.MaxSpeed)
             level.Player.SpeedY += gravity;
-
-        // Air friction
-        level.Player.SpeedX *= airFriction;
 
         // Framerate based speed
         float updatedPlayerSpeedX = level.Player.SpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -157,13 +161,17 @@ public class Engine : Game
                 else
                 {
                     // Left collision with platform
-                    if (level.Player.SpeedX > 0 && level.Player.CollisionBounds.Right <= platform.CollisionBounds.Left + 5)
+                    if (level.Player.SpeedX > 0 && 
+                        level.Player.CollisionBounds.Right <= platform.CollisionBounds.Left &&
+                        level.Player.CollisionBoundsNext.Right >= platform.CollisionBounds.Left)
                     {
                         level.Player.NextPositionX = platform.CollisionBounds.Left - level.Player.Texture.Width / 2;
                         level.Player.SpeedX = 0;
                     }
                     // Right collision with platform
-                    else if (level.Player.SpeedX < 0 && level.Player.CollisionBounds.Left >= platform.CollisionBounds.Right - 5)
+                    else if (level.Player.SpeedX < 0 && 
+                             level.Player.CollisionBounds.Left >= platform.CollisionBounds.Right &&
+                             level.Player.CollisionBoundsNext.Left <= platform.CollisionBounds.Right)
                     {
                         level.Player.NextPositionX = platform.CollisionBounds.Right + level.Player.Texture.Width / 2;
                         level.Player.SpeedX = 0;
