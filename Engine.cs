@@ -15,6 +15,9 @@ public class Engine : Game
     Texture2D wallTexture;
     private Texture2D _debugTexture;
 
+    // Fonts
+    SpriteFont debugFont;
+
     // Colors
     Color levelFilterColor;
     Color levelBackgroundColor;
@@ -49,8 +52,8 @@ public class Engine : Game
         int screenWidth = GraphicsDevice.Viewport.Width;
         int screenHeight = GraphicsDevice.Viewport.Height;
 
-        // Create level
-        _levelManager.CreateLevel1(_levelName, "platform", "wall", screenWidth);
+        // Create level TODO: Replace with function that matches level name and loads correct function from level manager
+        _levelManager.CreateLevel1(_levelName, "Textures/platform", "Textures/wall", screenWidth);
 
         // Get level
         level = _levelManager.GetLevel(_levelName);
@@ -75,10 +78,15 @@ public class Engine : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        // Level textures
         platformTexture = Content.Load<Texture2D>(level.SetPlatformTexture());
         wallTexture = Content.Load<Texture2D>(level.SetWallTexture());
 
-        level.Player.Texture = Content.Load<Texture2D>("stickman");
+        // Player texture
+        level.Player.Texture = Content.Load<Texture2D>("Textures/stickman");
+
+        // Font textures
+        debugFont = Content.Load<SpriteFont>("Fonts/debugtext");
 
         // Debug 1x1 white texture
         _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -287,6 +295,14 @@ public class Engine : Game
         // Draw debug info
         if (_debugMode)
         {
+            // Draw player velocity information
+            _spriteBatch.DrawString(
+                debugFont,
+                $"X: {level.Player.SpeedX}, Y: {level.Player.SpeedY}",
+                new Vector2(level.Player.Position.X - 25, level.Player.Position.Y - 50),
+                Color.Yellow
+            );
+
             // Drawlevel.Player collision bounds
             DrawRectangle(level.Player.CollisionBounds, Color.Red, 4);
             DrawRectangle(level.Player.CollisionBoundsNext, Color.Yellow, 2);
