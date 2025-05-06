@@ -26,7 +26,14 @@ public class LevelManager
 
         // Add platforms TODO: Make this more dynamic, props or parameters or objects
         _currentLevel.AddPlatform(100, 200, true);
+        _currentLevel.AddPlatform(180, 200, true);
+        _currentLevel.AddPlatform(300, 150, true);
+        _currentLevel.AddPlatform(400, 100, true);
         _currentLevel.AddPlatform(300, 400, true);
+        _currentLevel.AddPlatform(380, 400, true);
+        _currentLevel.AddPlatform(500, 400, true);
+        _currentLevel.AddPlatform(580, 400, true);
+        _currentLevel.AddPlatform(650, 300, true);
 
         // Add walls TODO: Make this more dynamic, props or parameters or objects
         _currentLevel.AddWall(-50, 0, true, false); // Left wall
