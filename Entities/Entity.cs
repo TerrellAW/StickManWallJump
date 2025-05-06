@@ -9,8 +9,6 @@ public abstract class Entity
     public abstract Texture2D Texture { get; set; }
 
     // Entity constants
-    public abstract float MaxJumpForce { get; set; }
-    public abstract float MinJumpForce { get; set; }
     public abstract float MaxSpeed { get; set; }
 
     // Entity variables

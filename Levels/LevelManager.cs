@@ -35,8 +35,11 @@ public class LevelManager
         // Gonna need to add facing direction to wall objects
 
         // Set player position
-        _currentLevel.Player = new Player(new Vector2(140, 50), playerSpeed, 0f, 0f, 0f, 0f, true);
+        _currentLevel.Player = new Player(new Vector2(140, 50), playerSpeed, 0f, 300f, 0f, 0f, true);
         _currentLevel.PlayerSpeed = playerSpeed;
+
+        // Set level properties
+        _currentLevel.AirFriction = 0.999f; // Low air friction
 
         _levels.Add(_currentLevel.Name, _currentLevel);
     }

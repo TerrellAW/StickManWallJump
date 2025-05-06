@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using StickManWallJump.Input;
+
 namespace StickManWallJump;
 
 public class Engine : Game
@@ -32,6 +34,9 @@ public class Engine : Game
     private SpriteBatch _spriteBatch;
     private LevelManager _levelManager;
 
+    // Input management
+    private IInputManager _inputManager;
+
     // Debug mode
     private bool _debugMode;
 
@@ -45,6 +50,9 @@ public class Engine : Game
         this._levelManager = levelManager;
         this._levelName = levelName;
         this._debugMode = debugMode;
+
+        // Initialize input manager with default input type
+        _inputManager = InputManagerFactory.CreateInputManager(InputType.Keyboard, GraphicsDevice);
     }
 
     protected override void Initialize()
@@ -66,6 +74,13 @@ public class Engine : Game
         // Set physics constants
         gravity = level.Gravity;
         airFriction = level.AirFriction;
+
+        // Initialize input manager with platform specific input type
+        #if ANDROID
+            _inputManager = InputManagerFactory.CreateInputManager(InputType.Touch, GraphicsDevice);
+        #else
+            _inputManager = InputManagerFactory.CreateInputManager(InputType.Keyboard, GraphicsDevice);
+        #endif
 
         base.Initialize();
     }
@@ -92,8 +107,15 @@ public class Engine : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+        // Update input state
+        _inputManager.Update(gameTime);
+
+        // Exit condition
+        if (_inputManager.IsPause())
+            Exit(); // TODO: Replace with pause menu
+
+        // Handle player input
+        HandlePlayerInput();
 
         // Air friction
         if (Math.Abs(level.Player.SpeedY) > 0.01f)
@@ -238,6 +260,15 @@ public class Engine : Game
         level.Player.Position = new Vector2(level.Player.NextPositionX, level.Player.NextPositionY);
 
         base.Update(gameTime);
+    }
+
+    private void HandlePlayerInput()
+    {
+        // Handle jumping
+        if (_inputManager.IsJump() && Math.Abs(level.Player.SpeedY) < 0.01f)
+        {
+            level.Player.SpeedY = -level.Player.JumpForce;
+        }
     }
 
     /// <summary>

@@ -9,8 +9,6 @@ public class Player : Entity
     public override Texture2D Texture { get; set; }
 
     // Player constants
-    public override float MaxJumpForce { get; set; } = 100f;
-    public override float MinJumpForce { get; set; } = 20f;
     public override float MaxSpeed { get; set; } = 400f;
 
     // Constructor
