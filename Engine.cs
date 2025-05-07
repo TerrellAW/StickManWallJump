@@ -46,13 +46,14 @@ public class Engine : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
 
+        // Set the screen resolution
+        _graphics.PreferredBackBufferWidth = 360; // Set your desired width
+        _graphics.PreferredBackBufferHeight = 800; // Set your desired height
+
         // Store for use in initializer
         this._levelManager = levelManager;
         this._levelName = levelName;
         this._debugMode = debugMode;
-
-        // Initialize input manager with default input type
-        _inputManager = InputManagerFactory.CreateInputManager(InputType.Keyboard, GraphicsDevice);
     }
 
     protected override void Initialize()
@@ -60,9 +61,6 @@ public class Engine : Game
         // Screen dimensions
         int screenWidth = GraphicsDevice.Viewport.Width;
         int screenHeight = GraphicsDevice.Viewport.Height;
-
-        // Create level TODO: Replace with function that matches level name and loads correct function from level manager
-        _levelManager.CreateLevel1(_levelName, "Textures/platform", "Textures/wall", screenWidth, 60f);
 
         // Get level
         level = _levelManager.GetLevel(_levelName);
@@ -76,11 +74,11 @@ public class Engine : Game
         airFriction = level.AirFriction;
 
         // Initialize input manager with platform specific input type
-        #if ANDROID
+#if ANDROID
             _inputManager = InputManagerFactory.CreateInputManager(InputType.Touch, GraphicsDevice);
-        #else
-            _inputManager = InputManagerFactory.CreateInputManager(InputType.Keyboard, GraphicsDevice);
-        #endif
+#else
+        _inputManager = InputManagerFactory.CreateInputManager(InputType.Keyboard, level.Player, GraphicsDevice);
+#endif
 
         base.Initialize();
     }
@@ -109,6 +107,9 @@ public class Engine : Game
     {
         // Update input state
         _inputManager.Update(gameTime);
+
+        // Update wall collision state
+        level.Player.IsOnWall = false;
 
         // Exit condition
         if (_inputManager.IsPause())
@@ -176,25 +177,25 @@ public class Engine : Game
                     level.Player.SpeedY = 0;
                 }
                 // Handle horizontal collisions with platforms as well
-                else
-                {
-                    // Left collision with platform
-                    if (level.Player.SpeedX > 0 && 
-                        level.Player.CollisionBounds.Right <= platform.CollisionBounds.Left &&
-                        level.Player.CollisionBoundsNext.Right >= platform.CollisionBounds.Left)
-                    {
-                        level.Player.NextPositionX = platform.CollisionBounds.Left - level.Player.Texture.Width / 2;
-                        level.Player.SpeedX = 0;
-                    }
-                    // Right collision with platform
-                    else if (level.Player.SpeedX < 0 && 
-                             level.Player.CollisionBounds.Left >= platform.CollisionBounds.Right &&
-                             level.Player.CollisionBoundsNext.Left <= platform.CollisionBounds.Right)
-                    {
-                        level.Player.NextPositionX = platform.CollisionBounds.Right + level.Player.Texture.Width / 2;
-                        level.Player.SpeedX = 0;
-                    }
-                }
+                // else
+                // {
+                //     // Left collision with platform
+                //     if (level.Player.SpeedX > 0 &&
+                //         level.Player.CollisionBounds.Right <= platform.CollisionBounds.Left &&
+                //         level.Player.CollisionBoundsNext.Right >= platform.CollisionBounds.Left)
+                //     {
+                //         level.Player.NextPositionX = platform.CollisionBounds.Left - level.Player.Texture.Width / 2;
+                //         level.Player.SpeedX = 0;
+                //     }
+                //     // Right collision with platform
+                //     else if (level.Player.SpeedX < 0 &&
+                //              level.Player.CollisionBounds.Left >= platform.CollisionBounds.Right &&
+                //              level.Player.CollisionBoundsNext.Left <= platform.CollisionBounds.Right)
+                //     {
+                //         level.Player.NextPositionX = platform.CollisionBounds.Right + level.Player.Texture.Width / 2;
+                //         level.Player.SpeedX = 0;
+                //     }
+                // }
 
                 // Update next position collision bounds after adjustment
                 level.Player.CollisionBoundsNext = new Rectangle(
@@ -255,6 +256,19 @@ public class Engine : Game
                 );
             }
         }
+        foreach (var wall in level.Walls) // For wall jumping
+        {
+            // Check if player is touching a wall but not necessarily colliding with it
+            bool touchingLeftWall = Math.Abs(level.Player.CollisionBounds.Right - wall.CollisionBounds.Left) <= 2;
+            bool touchingRightWall = Math.Abs(level.Player.CollisionBounds.Left - wall.CollisionBounds.Right) <= 2;
+
+            // If player is airborne (not on ground) and touching a wall
+            if ((touchingLeftWall || touchingRightWall) && Math.Abs(level.Player.SpeedY) > 0.01f)
+            {
+                level.Player.IsOnWall = true;
+                break; // Found a wall contact, no need to check further
+            }
+        }
 
         // Motion
         level.Player.Position = new Vector2(level.Player.NextPositionX, level.Player.NextPositionY);
@@ -268,6 +282,21 @@ public class Engine : Game
         if (_inputManager.IsJump() && Math.Abs(level.Player.SpeedY) < 0.01f)
         {
             level.Player.SpeedY = -level.Player.JumpForce;
+        }
+        else if (_inputManager.IsWallJump())
+        {
+            // Apply wall jump force
+            level.Player.SpeedY = -level.Player.JumpForce;
+            if (level.Player.FacingRight) // Check direction and flip it
+            {
+                level.Player.SpeedX = -level.Player.SpeedX;
+                level.Player.FacingRight = false;
+            }
+            else
+            {
+                level.Player.SpeedX = -level.Player.SpeedX;
+                level.Player.FacingRight = true;
+            }
         }
     }
 
@@ -333,8 +362,9 @@ public class Engine : Game
             // Draw player velocity information
             _spriteBatch.DrawString(
                 debugFont,
-                $"X: {level.Player.SpeedX}, Y: {level.Player.SpeedY}",
-                new Vector2(level.Player.Position.X - 25, level.Player.Position.Y - 50),
+                $"X: {level.Player.SpeedX}, Y: {level.Player.SpeedY} \n" +
+                $"Wall Contact: {level.Player.IsOnWall}",
+                new Vector2(level.Player.Position.X - 50, level.Player.Position.Y - 60),
                 Color.Yellow
             );
 

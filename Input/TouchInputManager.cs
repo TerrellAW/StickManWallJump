@@ -15,8 +15,14 @@ public class TouchInputManager : IInputManager
     private bool _pause;
     private Rectangle _pauseButtonBounds;
 
-    public TouchInputManager(GraphicsDevice graphicsDevice)
+    // Fields
+    private readonly Player _player;
+
+    public TouchInputManager(Player player, GraphicsDevice graphicsDevice)
     {
+        // Initialize the player
+        _player = player;
+        // Initialize the graphics device
         _graphicsDevice = graphicsDevice;
         TouchPanel.EnabledGestures = GestureType.Tap;
 
@@ -31,9 +37,10 @@ public class TouchInputManager : IInputManager
     }
 
     public bool IsJump() => _jump;
-    public bool IsWallJump() => _jump;
+    public bool IsWallJump(Player player) => IsJump() && player.IsOnWall && player.CanWallJump();
+    public bool IsWallJump() => IsWallJump(_player); // Overloaded
     public bool IsPause() => _pause;
-    
+
     public void Update(GameTime gameTime)
     {
         // Reset state
@@ -56,7 +63,7 @@ public class TouchInputManager : IInputManager
                     _pause = true;
                 }
                 // Otherwise, treat as jump if within main screen area
-                else if (gesture.Position.X < _graphicsDevice.Viewport.Width && 
+                else if (gesture.Position.X < _graphicsDevice.Viewport.Width &&
                          gesture.Position.Y < _graphicsDevice.Viewport.Height)
                 {
                     _jump = true;
@@ -73,8 +80,8 @@ public class TouchInputManager : IInputManager
                 _pause = true;
             }
             // Otherwise, treat as jump if within main screen area
-            else if (touch.State == TouchLocationState.Pressed && 
-                     touch.Position.X < _graphicsDevice.Viewport.Width && 
+            else if (touch.State == TouchLocationState.Pressed &&
+                     touch.Position.X < _graphicsDevice.Viewport.Width &&
                      touch.Position.Y < _graphicsDevice.Viewport.Height)
             {
                 _jump = true;

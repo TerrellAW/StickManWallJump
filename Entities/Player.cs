@@ -11,6 +11,26 @@ public class Player : Entity
     // Player constants
     public override float MaxSpeed { get; set; } = 400f;
 
+    // Variables
+    private float _timeSinceWallContact = 0f; // Time since the player last touched a wall
+
+    // Flags
+    private bool _isOnWall;
+
+    // Getters and Setters
+    public bool IsOnWall
+    {
+        get => _isOnWall;
+        set
+        {
+            _isOnWall = value;
+            if (_isOnWall)
+            {
+                _timeSinceWallContact = 0f; // Reset the time since wall contact
+            }
+        }
+    }
+
     // Constructor
     public Player(Vector2 Position, float SpeedX, float SpeedY, float JumpForce, float NextPositionX, float NextPositionY, bool facingRight)
     {
@@ -23,5 +43,13 @@ public class Player : Entity
         this.FacingRight = facingRight;
         this.CollisionBounds = new Rectangle((int)Position.X, (int)Position.Y, 24, 49); // Player is 24x49 pixels
         this.CollisionBoundsNext = new Rectangle((int)NextPositionX, (int)NextPositionY, 24, 49); // Player is 24x49 pixels
+    }
+
+    // Methods
+    public bool CanWallJump()
+    {
+        // Check if the player can wall jump
+        return _timeSinceWallContact <= 0.40f // 400ms of Coyote Time
+               && _timeSinceWallContact > 0f; // Player has touched the wall
     }
 }

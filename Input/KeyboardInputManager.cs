@@ -13,9 +13,14 @@ public class KeyboardInputManager : IInputManager
     private KeyboardState _currentKeyboardState;
     private KeyboardState _previousKeyboardState;
 
+    // Fields
+    private readonly Player _player;
+
     // Constructor
-    public KeyboardInputManager(GraphicsDevice graphicsDevice = null)
+    public KeyboardInputManager(Player player, GraphicsDevice graphicsDevice = null)
     {
+        // Initialize the player
+        _player = player;
         // Initialize the keyboard state
         _currentKeyboardState = Keyboard.GetState();
         _previousKeyboardState = _currentKeyboardState;
@@ -23,7 +28,8 @@ public class KeyboardInputManager : IInputManager
 
     // Movement actions
     public bool IsJump() => _currentKeyboardState.IsKeyDown(Keys.Space) && _previousKeyboardState.IsKeyUp(Keys.Space);
-    public bool IsWallJump() => IsJump();
+    public bool IsWallJump(Player player) => IsJump() && player.IsOnWall && player.CanWallJump();
+    public bool IsWallJump() => IsWallJump(_player); // Overloaded
 
     // Interface actions
     public bool IsPause() => _currentKeyboardState.IsKeyDown(Keys.Escape) && _previousKeyboardState.IsKeyUp(Keys.Escape);

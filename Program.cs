@@ -21,6 +21,8 @@ public static class Program
         // Create level manager
         LevelManager levelManager = new LevelManager();
 
+        levelManager.CreateLevel1("Level1", "Textures/platform", "Textures/wall", 60f);
+
         // Pass debug flag to Engine constructor
         using var game = new Engine(levelManager, "Level1", debugMode);
         game.Run();

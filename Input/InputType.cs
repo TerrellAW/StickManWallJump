@@ -19,14 +19,14 @@ public enum InputType
 /// </summary>
 public static class InputManagerFactory
 {
-    public static IInputManager CreateInputManager(InputType inputType, GraphicsDevice graphicsDevice = null)
+    public static IInputManager CreateInputManager(InputType inputType, Player player, GraphicsDevice graphicsDevice = null)
     {
         return inputType switch
         {
-            InputType.Keyboard => new KeyboardInputManager(graphicsDevice),
-            InputType.Gamepad => new GamepadInputManager(graphicsDevice),
-            InputType.Touch => new TouchInputManager(graphicsDevice),
-            _ => new KeyboardInputManager() // Default to keyboard input manager
+            InputType.Keyboard => new KeyboardInputManager(player, graphicsDevice),
+            InputType.Gamepad => new GamepadInputManager(player, graphicsDevice),
+            InputType.Touch => new TouchInputManager(player, graphicsDevice),
+            _ => new KeyboardInputManager(player) // Default to keyboard input manager
         };
     }
 }

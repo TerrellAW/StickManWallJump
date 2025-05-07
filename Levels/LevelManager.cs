@@ -20,7 +20,7 @@ public class LevelManager
         }
     }
 
-    public void CreateLevel1(string levelName, string platformTexture, string wallTexture, int screenWidth, float playerSpeed)
+    public void CreateLevel1(string levelName, string platformTexture, string wallTexture, float playerSpeed)
     {
         _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White, Color.Black);
 
@@ -36,8 +36,8 @@ public class LevelManager
         _currentLevel.AddPlatform(650, 300, true);
 
         // Add walls TODO: Make this more dynamic, props or parameters or objects
-        _currentLevel.AddWall(-50, 0, true, false); // Left wall
-        _currentLevel.AddWall(screenWidth - 50, 0, true, true); // Right wall
+        _currentLevel.AddWall(-50, 10, true, false); // Left wall
+        _currentLevel.AddWall(750, 10, true, true); // Right wall
         // Gonna need to pass screen width and height to level manager for object placement
         // Gonna need to add facing direction to wall objects
 

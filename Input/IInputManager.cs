@@ -11,7 +11,7 @@ public interface IInputManager
     bool IsMoveLeft() => false; // Default value renders it optional
     bool IsMoveRight() => false;
     bool IsJump();
-    bool IsWallJump();
+    bool IsWallJump() => false; // Can be overloaded
 
     // Interface actions
     bool IsPause();

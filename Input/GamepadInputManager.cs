@@ -15,11 +15,15 @@ public class GamepadInputManager : IInputManager
     private GamePadState _previousGamePadState;
 
     // Fields
+    private readonly Player _player;
     private readonly PlayerIndex _playerIndex;
 
     // Constructor
-    public GamepadInputManager(GraphicsDevice graphicsDevice = null, PlayerIndex playerIndex = PlayerIndex.One)
+    public GamepadInputManager(Player player, GraphicsDevice graphicsDevice = null, PlayerIndex playerIndex = PlayerIndex.One)
     {
+        // Initialize the player
+        _player = player;
+
         // Initialize the gamepad state
         _playerIndex = playerIndex;
         _currentGamePadState = GamePad.GetState(_playerIndex);
@@ -28,8 +32,9 @@ public class GamepadInputManager : IInputManager
 
     // Movement actions
     public bool IsJump() => _currentGamePadState.Buttons.A == ButtonState.Pressed && _previousGamePadState.Buttons.A == ButtonState.Released;
-    public bool IsWallJump() => IsJump();
-    
+    public bool IsWallJump(Player player) => IsJump() && player.IsOnWall && player.CanWallJump();
+    public bool IsWallJump() => IsWallJump(_player); // Overloaded
+
     // Interface actions
     public bool IsPause() => _currentGamePadState.Buttons.Start == ButtonState.Pressed && _previousGamePadState.Buttons.Start == ButtonState.Released;
 
