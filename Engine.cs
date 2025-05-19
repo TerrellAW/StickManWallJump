@@ -33,6 +33,7 @@ public class Engine : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private LevelManager _levelManager;
+    private Camera _camera;
 
     // Input management
     private IInputManager _inputManager;
