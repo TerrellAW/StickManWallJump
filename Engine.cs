@@ -82,6 +82,8 @@ public class Engine : Game
 #endif
 
         base.Initialize();
+
+        _camera = new Camera(level.Player.Position); // Initialize camera at player position
     }
 
     // TODO: Load textures in level class and pass them to the engine here
@@ -273,6 +275,10 @@ public class Engine : Game
 
         // Motion
         level.Player.Position = new Vector2(level.Player.NextPositionX, level.Player.NextPositionY);
+
+        // Update Camera (TODO: Add more logic to PositionY so it only follows after landing on a platform)
+        _camera.Position = new Vector2(level.Player.NextPositionX, level.Player.NextPositionY); // Follow player
+        _camera.GetViewMatrix(GraphicsDevice);
 
         base.Update(gameTime);
     }
