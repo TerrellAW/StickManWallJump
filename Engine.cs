@@ -278,7 +278,6 @@ public class Engine : Game
 
         // Update Camera (TODO: Add more logic to PositionY so it only follows after landing on a platform)
         _camera.Position = new Vector2(level.Player.NextPositionX, level.Player.NextPositionY); // Follow player
-        _camera.GetViewMatrix(GraphicsDevice);
 
         base.Update(gameTime);
     }
@@ -321,8 +320,11 @@ public class Engine : Game
     {
         GraphicsDevice.Clear(levelBackgroundColor);
 
+        // Get the view matrix from camera
+        Matrix viewMatrix = _camera.GetViewMatrix(GraphicsDevice);
+
         // Begin sprite batch
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(transformMatrix: viewMatrix);
 
         // Draw platforms
         foreach (var platform in level.Platforms)
