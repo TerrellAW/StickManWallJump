@@ -28,7 +28,7 @@ public class KeyboardInputManager : IInputManager
 
     // Movement actions
     public bool IsJump() => _currentKeyboardState.IsKeyDown(Keys.Space) && _previousKeyboardState.IsKeyUp(Keys.Space);
-    public bool IsWallJump(Player player) => IsJump() && player.IsOnWall && player.CanWallJump();
+    public bool IsWallJump(Player player) => IsJump() && player.CanWallJump();
     public bool IsWallJump() => IsWallJump(_player); // Overloaded
 
     // Interface actions

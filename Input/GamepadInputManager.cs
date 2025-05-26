@@ -32,7 +32,7 @@ public class GamepadInputManager : IInputManager
 
     // Movement actions
     public bool IsJump() => _currentGamePadState.Buttons.A == ButtonState.Pressed && _previousGamePadState.Buttons.A == ButtonState.Released;
-    public bool IsWallJump(Player player) => IsJump() && player.IsOnWall && player.CanWallJump();
+    public bool IsWallJump(Player player) => IsJump() && player.CanWallJump();
     public bool IsWallJump() => IsWallJump(_player); // Overloaded
 
     // Interface actions

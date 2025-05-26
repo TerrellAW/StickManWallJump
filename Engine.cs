@@ -111,6 +111,9 @@ public class Engine : Game
         // Update input state
         _inputManager.Update(gameTime);
 
+        // Update player state (including wall contact timer)
+        level.Player.Update(gameTime);
+
         // Update wall collision state
         level.Player.IsOnWall = false;
 
@@ -125,7 +128,7 @@ public class Engine : Game
         if (Math.Abs(level.Player.SpeedY) > 0.01f)
             level.Player.SpeedX *= airFriction;
         else // No air friction if grounded
-            level.Player.SpeedX = level.PlayerSpeed;
+            level.Player.SpeedX = level.Player.FacingRight ? level.PlayerSpeed : -level.PlayerSpeed;
 
         // Gravity
         if (level.Player.SpeedY < level.Player.MaxSpeed)
@@ -292,15 +295,15 @@ public class Engine : Game
         else if (_inputManager.IsWallJump())
         {
             // Apply wall jump force
-            level.Player.SpeedY = -level.Player.JumpForce;
+            level.Player.SpeedY = -level.Player.WallJumpForce;
             if (level.Player.FacingRight) // Check direction and flip it
             {
-                level.Player.SpeedX = -level.Player.SpeedX;
+                level.Player.SpeedX = -level.Player.WallJumpForce; // Push left with wall jump force
                 level.Player.FacingRight = false;
             }
             else
             {
-                level.Player.SpeedX = -level.Player.SpeedX;
+                level.Player.SpeedX = level.Player.WallJumpForce; // Push right with wall jump force
                 level.Player.FacingRight = true;
             }
         }

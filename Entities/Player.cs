@@ -10,6 +10,7 @@ public class Player : Entity
 
     // Player constants
     public override float MaxSpeed { get; set; } = 400f;
+    public float WallJumpForce { get; set; } = 200f; // Force applied during wall jumps
 
     // Variables
     private float _timeSinceWallContact = 0f; // Time since the player last touched a wall
@@ -49,7 +50,14 @@ public class Player : Entity
     public bool CanWallJump()
     {
         // Check if the player can wall jump
-        return _timeSinceWallContact <= 0.40f // 400ms of Coyote Time
-               && _timeSinceWallContact > 0f; // Player has touched the wall
+        return _timeSinceWallContact <= 0.40f; // Player has touched the wall within last 0.40 seconds
+    }
+
+    public void Update(GameTime gameTime)
+    {
+        if (!_isOnWall)
+        {
+            _timeSinceWallContact += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
     }
 }

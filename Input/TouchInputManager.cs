@@ -37,7 +37,7 @@ public class TouchInputManager : IInputManager
     }
 
     public bool IsJump() => _jump;
-    public bool IsWallJump(Player player) => IsJump() && player.IsOnWall && player.CanWallJump();
+    public bool IsWallJump(Player player) => IsJump() && player.CanWallJump();
     public bool IsWallJump() => IsWallJump(_player); // Overloaded
     public bool IsPause() => _pause;
 
