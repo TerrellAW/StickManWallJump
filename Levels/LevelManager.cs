@@ -20,7 +20,7 @@ internal class LevelManager
         }
     }
 
-    internal void CreateLevel1(string levelName, string platformTexture, string wallTexture, float playerSpeed)
+    internal void CreateLevel1(string levelName, string platformTexture, string wallTexture, float playerSpeed) // TODO: Use index as key instead of name
     {
         _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White, Color.Black);
 
