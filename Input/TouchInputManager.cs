@@ -7,7 +7,7 @@ namespace StickManWallJump.Input;
 /// <summary>
 /// Touch input manager for handling touch input on touch screen devices.
 /// </summary>
-public class TouchInputManager : IInputManager
+internal class TouchInputManager : IInputManager
 {
     private readonly GraphicsDevice _graphicsDevice;
     private TouchCollection _touchState;

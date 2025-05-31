@@ -7,7 +7,7 @@ namespace StickManWallJump.Input;
 /// <summary>
 /// Keyboard input manager for handling keyboard input.
 /// </summary>
-public class KeyboardInputManager : IInputManager
+internal class KeyboardInputManager : IInputManager
 {
     // State Initialization
     private KeyboardState _currentKeyboardState;

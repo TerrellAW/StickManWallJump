@@ -12,15 +12,15 @@ public abstract class Entity
     public abstract float MaxSpeed { get; set; }
 
     // Entity variables
-    public float JumpForce { get; set; }
-    public float SpeedX { get; set; }
-    public float SpeedY { get; set; }
-    public float NextPositionX { get; set; }
-    public float NextPositionY { get; set; }
-    public Vector2 Position { get; set; }
-    public bool FacingRight { get; set; }
+    internal float JumpForce { get; set; }
+    internal float SpeedX { get; set; }
+    internal float SpeedY { get; set; }
+    internal float NextPositionX { get; set; }
+    internal float NextPositionY { get; set; }
+    internal Vector2 Position { get; set; }
+    internal bool FacingRight { get; set; }
 
     // Collision bounds
-    public Rectangle CollisionBounds { get; set; }
-    public Rectangle CollisionBoundsNext { get; set; }
+    internal Rectangle CollisionBounds { get; set; }
+    internal Rectangle CollisionBoundsNext { get; set; }
 }

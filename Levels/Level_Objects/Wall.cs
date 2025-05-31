@@ -2,10 +2,10 @@ using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
-public class Wall : LevelObject
+internal class Wall : LevelObject
 {
     // Properties
-    public bool FacingRight { get; set; } // Direction the wall is facing
+    internal bool FacingRight { get; set; } // Direction the wall is facing
 
     // Constructor
     public Wall(int id, float x, float y, bool isSolid, bool facingRight) : base(id, x, y, isSolid)

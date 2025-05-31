@@ -2,7 +2,7 @@ using MonoGameGum;
 
 namespace StickManWallJump.Interface;
 
-public class Pause
+internal class Pause
 {
     
 }

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
-public class Level
+internal class Level
 {
     /// <summary>
     /// 
@@ -19,20 +19,20 @@ public class Level
     /// </summary>
 
     // Properties
-    public string Name { get; set; }
-    public string platformTexturePath { get; set; }
-    public string wallTexturePath { get; set; }
-    public List<Platform> Platforms { get; set; } = new List<Platform>();
-    public List<Wall> Walls { get; set; } = new List<Wall>();
-    public Player Player { get; set; }
-    public int ScreenWidth { get; set; }
-    public Color FilterColor { get; set; } // Color filter for the level
-    public Color BackgroundColor { get; set; } // Background color for the level
-    public float PlayerSpeed { get; set; } = 60f; // Default player speed
+    internal string Name { get; set; }
+    private string platformTexturePath { get; set; }
+    private string wallTexturePath { get; set; }
+    internal List<Platform> Platforms { get; set; } = new List<Platform>();
+    internal List<Wall> Walls { get; set; } = new List<Wall>();
+    internal Player Player { get; set; }
+    internal int ScreenWidth { get; set; }
+    internal Color FilterColor { get; set; } // Color filter for the level
+    internal Color BackgroundColor { get; set; } // Background color for the level
+    internal float PlayerSpeed { get; set; } = 60f; // Default player speed
 
     // Physics properties
-    public float Gravity = 6.0f; // Default gravity value
-    public float AirFriction = 0.98f; // Default air friction value
+    internal float Gravity = 6.0f; // Default gravity value
+    internal float AirFriction = 0.98f; // Default air friction value
 
     // Constructor
     public Level(string name, string platformTexturePath, string wallTexturePath, Color filterColor, Color backgroundColor)
@@ -47,22 +47,22 @@ public class Level
     //Methods
 
     // Textures
-    public string SetPlatformTexture()
+    internal string SetPlatformTexture()
     {
         return platformTexturePath;
     }
-    public string SetWallTexture()
+    internal string SetWallTexture()
     {
         return wallTexturePath;
     }
 
     // Add objects to the level
-    public void AddPlatform(float x, float y, bool isSolid)
+    internal void AddPlatform(float x, float y, bool isSolid)
     {
         int id = Platforms.Count + 1; // Unique ID for each platform
         Platforms.Add(new Platform(id, x, y, isSolid));
     }
-    public void AddWall(float x, float y, bool isSolid, bool facingRight)
+    internal void AddWall(float x, float y, bool isSolid, bool facingRight)
     {
         int id = Walls.Count + 1; // Unique ID for each wall
         Walls.Add(new Wall(id, x, y, isSolid, facingRight));

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,24 +10,24 @@ namespace StickManWallJump;
 public class Engine : Game
 {
     // Level object
-    public Level level;
+    private Level level;
     private string _levelName;
 
     // Level textures
-    Texture2D platformTexture;
-    Texture2D wallTexture;
+    private Texture2D platformTexture;
+    private Texture2D wallTexture;
     private Texture2D _debugTexture;
 
     // Fonts
-    SpriteFont debugFont;
+    private SpriteFont debugFont;
 
     // Colors
-    Color levelFilterColor;
-    Color levelBackgroundColor;
+    private Color levelFilterColor;
+    private Color levelBackgroundColor;
 
     // Physics constants
-    float gravity;
-    float airFriction;
+    private float gravity;
+    private float airFriction;
 
     // Game components
     private GraphicsDeviceManager _graphics;
@@ -41,7 +41,7 @@ public class Engine : Game
     // Debug mode
     private bool _debugMode;
 
-    public Engine(LevelManager levelManager, string levelName, bool debugMode = false)
+    internal Engine(LevelManager levelManager, string levelName, bool debugMode = false)
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";

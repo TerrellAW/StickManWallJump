@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
-public class Platform : LevelObject
+internal class Platform : LevelObject
 {
     // Constructor
     public Platform(int id, float x, float y, bool isSolid) : base(id, x, y, isSolid)

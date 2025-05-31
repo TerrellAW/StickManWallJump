@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StickManWallJump.Input;
 
-public enum InputType
+internal enum InputType
 {
     Keyboard,
     Gamepad,
@@ -17,9 +17,9 @@ public enum InputType
 /// The GraphicsDevice is used to display control content on the screen.
 /// The factory creates the appropriate input manager based on the input type.
 /// </summary>
-public static class InputManagerFactory
+internal static class InputManagerFactory
 {
-    public static IInputManager CreateInputManager(InputType inputType, Player player, GraphicsDevice graphicsDevice = null)
+    internal static IInputManager CreateInputManager(InputType inputType, Player player, GraphicsDevice graphicsDevice = null)
     {
         return inputType switch
         {

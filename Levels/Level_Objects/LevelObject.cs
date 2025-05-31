@@ -2,18 +2,18 @@
 
 namespace StickManWallJump;
 
-public abstract class LevelObject
+internal abstract class LevelObject
 {
     // Properties
-    public int ID { get; set; }
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Width { get; set; } // Width of the object
-    public float Height { get; set; } // Height of the object
-    public bool isSolid; // Determines if the object is solid or not
+    internal int ID { get; set; }
+    internal float X { get; set; }
+    internal float Y { get; set; }
+    internal float Width { get; set; } // Width of the object
+    internal float Height { get; set; } // Height of the object
+    internal bool isSolid; // Determines if the object is solid or not
 
     // Collision bounds
-    public Rectangle CollisionBounds { get; set; }
+    internal Rectangle CollisionBounds { get; set; }
 
     // Constructor
     public LevelObject(int id, float x, float y, bool isSolid)

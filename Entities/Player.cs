@@ -10,7 +10,7 @@ public class Player : Entity
 
     // Player constants
     public override float MaxSpeed { get; set; } = 400f;
-    public float WallJumpForce { get; set; } = 200f; // Force applied during wall jumps
+    internal float WallJumpForce { get; set; } = 200f; // Force applied during wall jumps
 
     // Variables
     private float _timeSinceWallContact = 0f; // Time since the player last touched a wall
@@ -19,7 +19,7 @@ public class Player : Entity
     private bool _isOnWall;
 
     // Getters and Setters
-    public bool IsOnWall
+    internal bool IsOnWall
     {
         get => _isOnWall;
         set
@@ -47,13 +47,13 @@ public class Player : Entity
     }
 
     // Methods
-    public bool CanWallJump()
+    internal bool CanWallJump()
     {
         // Check if the player can wall jump
         return _timeSinceWallContact <= 0.40f; // Player has touched the wall within last 0.40 seconds
     }
 
-    public void Update(GameTime gameTime)
+    internal void Update(GameTime gameTime)
     {
         if (!_isOnWall)
         {

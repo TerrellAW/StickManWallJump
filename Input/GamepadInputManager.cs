@@ -8,7 +8,7 @@ namespace StickManWallJump.Input;
 /// Gamepad input manager for handling gamepad input.
 /// </summary>
 
-public class GamepadInputManager : IInputManager
+internal class GamepadInputManager : IInputManager
 {
     // State Initialization
     private GamePadState _currentGamePadState;

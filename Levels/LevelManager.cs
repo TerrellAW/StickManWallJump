@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
-public class LevelManager
+internal class LevelManager
 {
     private Dictionary<string, Level> _levels = new Dictionary<string, Level>();
     private Level _currentLevel;
 
-    public Level GetLevel(string levelName)
+    internal Level GetLevel(string levelName)
     {
         if (_levels.ContainsKey(levelName))
         {
@@ -20,7 +20,7 @@ public class LevelManager
         }
     }
 
-    public void CreateLevel1(string levelName, string platformTexture, string wallTexture, float playerSpeed)
+    internal void CreateLevel1(string levelName, string platformTexture, string wallTexture, float playerSpeed)
     {
         _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White, Color.Black);
 
