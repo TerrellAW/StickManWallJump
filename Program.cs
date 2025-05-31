@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using StickManWallJump;
 
 public static class Program
