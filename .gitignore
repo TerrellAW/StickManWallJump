@@ -487,3 +487,6 @@ obj/
 
 # Visual Studio Code
 .vscode/
+
+# ZED IDE
+.zed/
