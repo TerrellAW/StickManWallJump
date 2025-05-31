@@ -16,13 +16,21 @@ cd StickManWallJump
 dotnet restore
 dotnet tools restore
 ```
-**3. Build Content**
+**3. Build Project**
 ```
-dotnet mgcb-editor Content/Content.mgcb
+dotnet build
 ```
+**4. Build Content**
+```
+dotnet mgcb -@:Content/Content.mgcb
+```
+- Alternatively, you can open the content editor to manage assets:
+  - **General**: `dotnet mgcb-editor Content/Content.mgcb`
+  - **Linux**: `dotnet mgcb-editor-linux Content/Content.mgcb`
+  - **Mac**: `dotnet mgcb-editor-mac Content/Content.mgcb`
 - Ensure all textures are loaded into the content loader
 ### Troubleshooting
-- If textures don't load verify the Content directory structure. Images used for textures should be in the Content directory itself.
+- If textures don't load verify the Content directory structure. Images used for textures should be in the `Content/Textures/` subdirectory.
 - Check that file names match exactly.
 - Ensure MonoGame content has been properly built.
 ### Debug Mode
