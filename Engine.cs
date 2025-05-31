@@ -41,7 +41,7 @@ public class Engine : Game
     // Debug mode
     private bool _debugMode;
 
-    internal Engine(LevelManager levelManager, string levelName, bool debugMode = false)
+    internal Engine(LevelManager levelManager, string levelName, bool debugMode = false) // TODO: Take index from LevelManager and use it to find the correct LevelLayout
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
@@ -311,9 +311,9 @@ public class Engine : Game
 
     /// <summary>
     /// Draws the game.
-    /// 
+    ///
     /// This recursive method is called once per frame and is responsible for rendering the game objects to the screen.
-    /// 
+    ///
     /// Vector2 objects position drawn elements with 2 coordinates, x and y.
     /// The x coordinate is horizontal and starts at 0 on the left side of the screen.
     /// The y coordinate is vertical and starts at 0 at the top of the screen.
