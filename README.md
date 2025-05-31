@@ -22,7 +22,7 @@ dotnet build
 ```
 **4. Build Content**
 ```
-dotnet mgcb -@:Content/Content.mgcb
+dotnet mgcb /build:Content/Content.mgcb
 ```
 - Alternatively, you can open the content editor to manage assets:
   - **General**: `dotnet mgcb-editor Content/Content.mgcb`
