@@ -4,6 +4,7 @@ StickManWallJump is an upcoming mobile game where wall jumping is a central mech
 ## Development Environment Setup
 ### Prerequisites
 **1. Install .NET SDK** - Download and install the latest .NET SDK from dotnet.microsoft.com
+
 **2. Install MonoGame SDK** - Download and install the MonoGame SDK from monogame.net/downloads
 ### Project Setup
 **1. Clone Repository**
