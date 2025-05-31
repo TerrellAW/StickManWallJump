@@ -17,13 +17,13 @@ cd StickManWallJump
 dotnet restore
 dotnet tools restore
 ```
-**3. Build Project**
-```
-dotnet build
-```
-**4. Build Content**
+**3. Build Content**
 ```
 dotnet mgcb /build:Content/Content.mgcb
+```
+**4. Build Project**
+```
+dotnet build
 ```
 - Alternatively, you can open the content editor to manage assets:
   - **General**: `dotnet mgcb-editor Content/Content.mgcb`
