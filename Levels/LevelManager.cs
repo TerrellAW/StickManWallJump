@@ -22,7 +22,11 @@ internal class LevelManager
 
     internal void CreateLevel1(string levelName, string platformTexture, string wallTexture, float playerSpeed) // TODO: Use index as key instead of name
     {
+        // TODO: Input something into LevelLayoutManager to get correct LevelLayout
         _currentLevel = new Level(levelName, platformTexture, wallTexture, Color.White, Color.Black);
+
+        // TODO: foreach loop that will go through each platform in LevelLayout and add them to the level
+        // same with walls
 
         // Add platforms TODO: Make this more dynamic, props or parameters or objects
         _currentLevel.AddPlatform(100, 200, true);
