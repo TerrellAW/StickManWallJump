@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 
 namespace StickManWallJump;
 
@@ -10,7 +10,8 @@ internal abstract class LevelObject
     internal float Y { get; set; }
     internal float Width { get; set; } // Width of the object
     internal float Height { get; set; } // Height of the object
-    internal bool isSolid; // Determines if the object is solid or not
+    internal bool isSolid; // Determines if the object is solid or
+    // TODO: Add isKill property for spikes and map boundaries
 
     // Collision bounds
     internal Rectangle CollisionBounds { get; set; }
