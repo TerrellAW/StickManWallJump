@@ -21,7 +21,7 @@ public static class Program
         // Create level manager
         LevelManager levelManager = new LevelManager();
 
-        levelManager.CreateLevel1("Level1", "Textures/platform", "Textures/wall", 60f);
+        levelManager.CreateLevel("Level1", "Textures/platform", "Textures/wall", 60f);
 
         string currentLevelName = "Level1"; // TODO: Implement level selection logic
 
