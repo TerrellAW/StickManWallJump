@@ -23,8 +23,10 @@ public static class Program
 
         levelManager.CreateLevel1("Level1", "Textures/platform", "Textures/wall", 60f);
 
+        string currentLevelName = "Level1"; // TODO: Implement level selection logic
+
         // Pass debug flag to Engine constructor
-        using var game = new Engine(levelManager, "Level1", debugMode); // TODO: Use index as key instead of name
+        using var game = new Engine(levelManager, currentLevelName, debugMode); // TODO: Use index as key instead of name
         game.Run();
     }
 }
