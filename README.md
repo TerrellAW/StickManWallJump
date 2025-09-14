@@ -1,5 +1,5 @@
 ## Description
-StickManWallJump is an upcoming mobile game where wall jumping is a central mechanic.
+StickManWallJump was going to be a mobile platformer game.
 
 ## Development Environment Setup
 ### Prerequisites
